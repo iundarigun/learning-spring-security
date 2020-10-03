@@ -37,7 +37,7 @@ class BasicAuthenticationApplicationTests {
 	@Test
 	@WithMockUser("spring")
 	fun simpleBasicHttpSecurity() {
-		mockMvc.perform(MockMvcRequestBuilders.get("/swagger-ui.html"))
+		mockMvc.perform(MockMvcRequestBuilders.get("/test"))
 			.andExpect(MockMvcResultMatchers.status().isOk)
 	}
 
@@ -46,8 +46,48 @@ class BasicAuthenticationApplicationTests {
 	 * */
 	@Test
 	fun simpleBasicHttpWithUserAndPassword() {
-		mockMvc.perform(MockMvcRequestBuilders.get("/swagger-ui.html")
+		mockMvc.perform(MockMvcRequestBuilders.get("/test")
 			.with(SecurityMockMvcRequestPostProcessors.httpBasic("admin", "supersecret")))
+			.andExpect(MockMvcResultMatchers.status().isOk)
+	}
+
+	/**
+	 * Here we are testing url config with no auth
+	 * */
+	@Test
+	fun simpleBasicHttpNoAuthURL() {
+		mockMvc.perform(MockMvcRequestBuilders.get("/no-auth/")
+			.with(SecurityMockMvcRequestPostProcessors.anonymous()))
+			.andExpect(MockMvcResultMatchers.status().isOk)
+	}
+
+	/**
+	 * Here we are testing api get without auth
+	 * */
+	@Test
+	fun simpleBasicHttpAPIGet() {
+		mockMvc.perform(MockMvcRequestBuilders.get("/api/something/banana")
+			.with(SecurityMockMvcRequestPostProcessors.anonymous()))
+			.andExpect(MockMvcResultMatchers.status().isOk)
+	}
+
+	/**
+	 * Here we are testing api post without auth and returns error
+	 * */
+	@Test
+	fun simpleBasicHttpAPIPost() {
+		mockMvc.perform(MockMvcRequestBuilders.post("/api/something/banana")
+			.with(SecurityMockMvcRequestPostProcessors.anonymous()))
+			.andExpect(MockMvcResultMatchers.status().isForbidden)
+	}
+
+	/**
+	 * Here we are testing api get anything (using mvcmatcher) without auth
+	 * */
+	@Test
+	fun simpleBasicHttpAPIAnythingGet() {
+		mockMvc.perform(MockMvcRequestBuilders.get("/api/anything/banana")
+			.with(SecurityMockMvcRequestPostProcessors.anonymous()))
 			.andExpect(MockMvcResultMatchers.status().isOk)
 	}
 }
