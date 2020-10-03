@@ -7,9 +7,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
-import org.springframework.security.core.userdetails.User
-import org.springframework.security.core.userdetails.UserDetailsService
-import org.springframework.security.provisioning.InMemoryUserDetailsManager
 
 @Configuration
 @EnableWebSecurity
@@ -38,6 +35,9 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
             .formLogin().and()
             .httpBasic()
     }
+
+    @Bean
+    fun passwordEncoder() = PasswordEncoderFactories.createDelegatingPasswordEncoder()
 
     /**
      * Overriding this method, the spring application.yml properties are ignored.
@@ -72,13 +72,13 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
                 .roles("ADMIN")
             .and()
                 .withUser("random")
-                .password("{noop}secretrandom")
+                .password("{sha256}c1c8f3ccee9c70be6f77b02e1dca988c043bc022568eeb35bdd066bf5c2c520b6846911fcdf5bdbe")
                 .roles("USER")
 
         // We dont need use and again if we dont want. We can simply use again auth
         auth.inMemoryAuthentication()
             .withUser("scott")
-            .password("{noop}tiger")
+            .password("{bcrypt}\$2a\$10\$FyCPTgRSUeiT2oMMBLaH.eaYm0XME5XlLeOXQErHkCrioZ/Uv/2qC")
             .roles("CUSTOMER")
 
         // @formatter:on

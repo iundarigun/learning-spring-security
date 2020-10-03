@@ -90,4 +90,20 @@ class InMemoryAuthenticationApplicationTests {
 			.with(SecurityMockMvcRequestPostProcessors.anonymous()))
 			.andExpect(MockMvcResultMatchers.status().isOk)
 	}
+
+	/**
+	 * Here we are testing passing user and password
+	 * */
+	@Test
+	fun passwordEncodingTests() {
+		mockMvc.perform(MockMvcRequestBuilders.get("/test")
+			.with(SecurityMockMvcRequestPostProcessors.httpBasic("random", "secretrandom")))
+			.andExpect(MockMvcResultMatchers.status().isOk)
+		mockMvc.perform(MockMvcRequestBuilders.get("/test")
+			.with(SecurityMockMvcRequestPostProcessors.httpBasic("scott", "tiger")))
+			.andExpect(MockMvcResultMatchers.status().isOk)
+		mockMvc.perform(MockMvcRequestBuilders.get("/test")
+			.with(SecurityMockMvcRequestPostProcessors.httpBasic("admin", "supersecret")))
+			.andExpect(MockMvcResultMatchers.status().isOk)
+	}
 }

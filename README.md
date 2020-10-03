@@ -100,3 +100,14 @@ chain. (ie basic auth, remember me cookie, etc)
 - **User Details Service** - Service to provide information about user
 - **Password Encoder** - Service to encrypt and verify passwords
 - **Security Context** - Holds details about authenticated entity 
+
+### Password encoding
+Legacy systems sometimes store passwords in plain text and, obviously, is not ideal
+
+Other systems encrypt the password in the database, then decrypt to verify. Again is bad, because we can be decrypted.
+
+We can use hash values. It is a one-way mathematical algorithm applied to the password, and we can not decrypted. Is not good enough because we can use dictionary and pass to hash trying to get the original password. So, a solution can be adding a "salt" text after original password, to dificult dictionary attacks
+
+Sha-256 was a default password encoder for Spring security in past. Today is no longer default, because is too fast and permit a brute force attack
+
+DelegatingPasswordEncoder be able your application to use several password encoders at same time. So, one user can be encode in a especific password encoder and other user may use an other.
