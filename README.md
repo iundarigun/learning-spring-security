@@ -87,3 +87,16 @@ spring:
       password: supersecret
 ```
 
+## Spring Security Authentication process
+
+Spring security works like the next diagram:
+![spring filters](images/securityFilter.png)
+
+There are many components that allow flexibility:
+- **Authentication Filter** - A filter for a specific Authentication type in the Spring Security filter
+chain. (ie basic auth, remember me cookie, etc)
+- **Authentication Manager** - Standard API interface used by filter
+- **Authentication Provider** - The implementation of Authentication - (in memory, database, etc)
+- **User Details Service** - Service to provide information about user
+- **Password Encoder** - Service to encrypt and verify passwords
+- **Security Context** - Holds details about authenticated entity 
