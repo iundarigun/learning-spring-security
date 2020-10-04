@@ -110,4 +110,7 @@ We can use hash values. It is a one-way mathematical algorithm applied to the pa
 
 Sha-256 was a default password encoder for Spring security in past. Today is no longer default, because is too fast and permit a brute force attack
 
-DelegatingPasswordEncoder be able your application to use several password encoders at same time. So, one user can be encode in a especific password encoder and other user may use an other.
+`DelegatingPasswordEncoder` be able your application to use several password encoders at same time. So, one user can be encode in a especific password encoder and other user may use an other. For this, password is save/storage with a brackets prefix, according with the algorithm register on `DelegatingPasswordEncode`. For example:
+- Using bcrpyt: `{bcrypt}$2a$10$FyCPTgRSUeiT2oMMBLaH.eaYm0XME5XlLeOXQErHkCrioZ/Uv/2qC`
+- Using sha256: `{sha256}c1c8f3ccee9c70be6f77b02e1dca988c043bc022568eeb35bdd066bf5c2c520b6846911fcdf5bdbe`
+
