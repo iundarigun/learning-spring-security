@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: in-memory-authentication
+
+server:
+  port: 1980
+
