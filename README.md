@@ -114,3 +114,13 @@ Sha-256 was a default password encoder for Spring security in past. Today is no 
 - Using bcrpyt: `{bcrypt}$2a$10$FyCPTgRSUeiT2oMMBLaH.eaYm0XME5XlLeOXQErHkCrioZ/Uv/2qC`
 - Using sha256: `{sha256}c1c8f3ccee9c70be6f77b02e1dca988c043bc022568eeb35bdd066bf5c2c520b6846911fcdf5bdbe`
 
+## Authorization in Spring Security
+Authorization is tge approval to perform an action within the application. 
+
+Spring Security has roles and authorities. Roles start with `ROLE_` keyword, and Authorities are any String. 
+
+Typically, role is a group of one or more authorities, but we can use roles or authorities to allow or denny any action, so basically are the same thing on Spring Security.
+
+Spring Security uses a decision tree to allow or denny actions based on votes for differents origins
+
+![decision votes](images/decisionVotes.png)
