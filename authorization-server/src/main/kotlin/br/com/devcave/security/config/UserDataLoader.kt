@@ -36,14 +36,30 @@ class UserDataLoader(
     }
 
     private fun loadClientsData() {
-        clientRepository.save(Client(
-            clientId = "app1",
-            clientSecret = passwordEncoder.encode("supersecret")
-        ))
-        clientRepository.save(Client(
-            clientId = "app2",
-            clientSecret = passwordEncoder.encode("supersecret")
-        ))
+        clientRepository.save(
+            Client(
+                clientId = "app1",
+                clientSecret = passwordEncoder.encode("supersecret"),
+                resources = "resource1, resource3",
+                scopes = "any",
+                authorizedGrantTypes = "password,client_credentials",
+                authorities = "read,write,delete",
+                accessTokenValiditySeconds = 5000,
+                refreshTokenValiditySeconds = 5000
+            )
+        )
+        clientRepository.save(
+            Client(
+                clientId = "app2",
+                clientSecret = passwordEncoder.encode("supersecret"),
+                resources = "resource1, resource2, resource3",
+                scopes = "",
+                authorizedGrantTypes = "password,client_credentials",
+                authorities = "read",
+                accessTokenValiditySeconds = 60,
+                refreshTokenValiditySeconds = 60
+            )
+        )
     }
 
     private fun loadSecurityData() {
@@ -75,8 +91,10 @@ class UserDataLoader(
         val admin = roleRepository.save(
             Role(
                 name = "ADMIN",
-                authorities = setOf(somethingCreate, somethingRead, somethingDelete, somethingUpdate,
-                    otherthingCreate, otherthingRead, otherthingDelete, otherthingUpdate)
+                authorities = setOf(
+                    somethingCreate, somethingRead, somethingDelete, somethingUpdate,
+                    otherthingCreate, otherthingRead, otherthingDelete, otherthingUpdate
+                )
             )
         )
         val userRole = roleRepository.save(

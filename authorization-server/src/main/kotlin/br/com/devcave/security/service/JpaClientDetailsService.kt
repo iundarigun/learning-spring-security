@@ -24,10 +24,13 @@ class JpaClientDetailsService(
         val client = clientRepository.findByClientId(clientId).orElseThrow {
             UsernameNotFoundException("ClientId $clientId not found")
         }
-        return BaseClientDetails(client.clientId, "resource1,resource2",
-            "any", "password,client_credentials","").also {
+        return BaseClientDetails(
+            client.clientId, client.resources,
+            client.scopes, client.authorizedGrantTypes, client.authorities
+        ).also {
             it.clientSecret = client.clientSecret
-            it.refreshTokenValiditySeconds = 4000
+            it.refreshTokenValiditySeconds = client.refreshTokenValiditySeconds
+            it.accessTokenValiditySeconds = client.accessTokenValiditySeconds
         }
     }
 }
