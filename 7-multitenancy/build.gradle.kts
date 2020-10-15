@@ -22,6 +22,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	// This dependency able to use Spring Data JPA Spel security features
 	implementation("org.springframework.security:spring-security-data")
 
 	// Kotlin adapters

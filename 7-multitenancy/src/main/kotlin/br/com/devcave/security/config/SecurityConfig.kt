@@ -16,8 +16,9 @@ import org.springframework.security.data.repository.query.SecurityEvaluationCont
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 class SecurityConfig : WebSecurityConfigurerAdapter() {
 
+    // This bean able to use Spring Data JPA Spel security features
     @Bean
-    fun securityEvaluationContextyExtension(): SecurityEvaluationContextExtension {
+    fun securityEvaluationContextExtension(): SecurityEvaluationContextExtension {
         return SecurityEvaluationContextExtension()
     }
 
