@@ -75,8 +75,10 @@ username is `user`
 ![loginpage](images/loginpage.png)
 
 Furthermore, Spring gives us a logout page:
+
 ![logout](images/logout.png)
-_ note_: This is because Java use a sessionId after first login
+
+_note_: This is because Java use a sessionId after first login
 
 We can customize this user and password using spring properties:
 ```
