@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: google-2af
+  h2:
+    console:
+      enabled: true
+  jpa:
+    open-in-view: false
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+
+server:
+  port: 1980
+

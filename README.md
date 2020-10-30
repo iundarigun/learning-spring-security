@@ -127,6 +127,19 @@ Spring Security uses a decision tree to allow or denny actions based on votes fo
 
 ![decision votes](images/decisionVotes.png)
 
+## Coding
+
+I put some projects on this repo adding new parts of spring security. Here I will describe some attention points for each other
+
+
+### google-2fa
+Add Two Factor Autentication based on Google Auth. To test you can use:
+- GET http://localhost:1980/user/register2fa (passing user/password) to enable 2FA. The return body is a link to a QR image to scan from Google Authenticator App or an other similar app.
+- POST http://localhost:1980/user/register2fa?verifyCode=<verifyCode> Put verify code from application. If return 200/OK, this user enables 2FA.
+- POST http://localhost:1980/user/verify2fa?verifyCode=<verifyCode> To generate a sessionId autenticated with user/password and Google Auth code
+
+_WIP_: At this moment, the code is not working
+
 
 
 ## Authorization Server
