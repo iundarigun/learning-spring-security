@@ -127,10 +127,40 @@ Spring Security uses a decision tree to allow or denny actions based on votes fo
 
 ![decision votes](images/decisionVotes.png)
 
+## Sessions and Tokens
+Today, when we work with Rest, one of it characterists is be stateless. Wherever, when we use `session id`, like is used by thymeleaf or others templates engines, the session is saved on server, so this behaivor affect scalability.
+
+We can use tokens to replace session id, and this token can be opaque or self-contained. 
+
+### JWT - JSON Web Token
+A common pattern is JWT like a token to replace session id. It is self-contained, that means it has all information about user and permissions for the request, and it has a signature to garantee the veracity of data. Two kinde of JWT:
+- JWS: JSON Web Signature - More common
+- JWE: JSON Web Encryption
+
+JWT (JWS) has three parts separete by point, coded in Base64: Header, Payload and Signature. Some common parts of the payload: 
+- iss: Emission entity
+- sub: Subject or user identification
+- iat: Emission date  
+- exp: Expiration date
+
+### OAuth
+We can use JWT with framework `oauth2`. 
+
+We have the next **roles** defined for oauth:
+- _Resource owner_:  Is an entity that allow access to it resources. When is a person, it is referred to as an end-user.
+- _Resource server_: Is the server with the user data. Only can access this data with a token created by the Authorization server.
+- _Authorization server_: It is responsable for the authentication and to generate the access tokens.
+- _Client_: The application or server that is using tokens to access to Resource Server.
+
+It has too diferents ways to use access, called **grant types**:
+- _Password_: When client and Authorization Server belong to the same organization, we let user and password to the client, and join to clientId and clientSecret to do authorization. Not recomended.
+- _Client Credentials_: Only used when a sistem call other sistem, only servers envolved.
+- _Authorization code_:  Used for traditional web pages. When a sistem ask for authorization, the user put on the _Authorization Server_ his credentials (user/password). The authorization server generate a authorization code that client will use to get de access token.
+- _Implicit_: The redirect to _client_ is directly with access token after login, without authorization code.
+
 ## Coding
 
 I put some projects on this repo adding new parts of spring security. Here I will describe some attention points for each other
-
 
 ### google-2fa
 Add Two Factor Autentication based on Google Auth. To test you can use:
@@ -140,10 +170,17 @@ Add Two Factor Autentication based on Google Auth. To test you can use:
 
 _WIP_: At this moment, the code is not working
 
+### Gateway with oauth and resources
+I put an example to use Gateway and an Authorization Server with Oauth2 pattern, and a service resource example. You can see on `oauth-with-gateway` folder
 
+To test, you need to start the three projects. Authenticate a client:
+- POST http://localhost:2020/auth/oauth/token with request params `scope=any` and grant_type=`client_credentials`, and basic authentication `app1:supersecret`
+- GET http://localhost:2020/resource-example/test with Bearer token from oauth response. 
 
-## Authorization Server
+To use user credentials:
+- POST http://localhost:2020/auth/oauth/token with request params `scope=any`, `grant_type=password`, `username=admin` and `password=supersecret`, and basic authentication `app1:supersecret`
 
+_WIP_: some improves in this project can be do. 
 
 ## References:
 
@@ -151,4 +188,6 @@ _WIP_: At this moment, the code is not working
 - https://github.com/caelum/apostila-microservices-com-spring-cloud/blob/master/14-seguranca.md
 - https://blog.marcosbarbero.com/oauth2-centralized-authorization-opaque-jdbc-spring-boot2/
 - https://gitlab.com/aovs/projetos-cursos/fj33-authorization-server/
-
+- https://www.brunobrito.net.br/oauth2/
+- https://microservices.io/patterns/security/access-token.html
+- https://medium.com/@igabhagya/spring-oauth2-authorization-server-jwt-jpa-data-model-1e458dcdac04

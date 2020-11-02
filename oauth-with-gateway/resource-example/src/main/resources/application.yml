@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: resource-example
+
+security:
+#  oauth2:
+#    resource:
+#      jwt:
+#        key-value: this-is-jwts-secret
+  authorization-server-url: localhost:1980
+jwt:
+  secret: this-is-jwts-secret
+
+server:
+  port: 1989
+

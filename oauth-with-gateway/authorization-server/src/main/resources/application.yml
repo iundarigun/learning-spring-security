@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: authorization-server
+  h2:
+    console:
+      enabled: true
+  jpa:
+    open-in-view: false
+jwt:
+  secret: this-is-jwts-secret
+
+server:
+  port: 1980
