@@ -1,6 +1,7 @@
 package br.com.devcave.security.config
 
 import br.com.devcave.security.service.JpaClientDetailsService
+import br.com.devcave.security.service.JpaUserDetailsService
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -19,6 +20,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore
 class OAuthServerConfig(
     private val authenticationManager: AuthenticationManager,
     private val jpaClientDetailsService: JpaClientDetailsService,
+    private val jpaUserDetailsService: JpaUserDetailsService,
     @Value("\${jwt.secret}")
     private val jwtSecret: String
 ) : AuthorizationServerConfigurerAdapter() {
@@ -30,6 +32,7 @@ class OAuthServerConfig(
     override fun configure(endpoints: AuthorizationServerEndpointsConfigurer) {
         endpoints.tokenStore(tokenStore())
             .accessTokenConverter(accessTokenConverter())
+            .userDetailsService(jpaUserDetailsService)
             .authenticationManager(authenticationManager)
     }
 
